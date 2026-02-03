@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine?</title>
+<style>
+  body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  h1 {
+    color: red;
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px white;
+  }
+
+  button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  #yes {
+    background: red;
+    color: white;
+  }
+
+  #no {
+    background: white;
+    color: red;
+    position: absolute;
+  }
+
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    animation: floatUp 3s linear forwards;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-600px) scale(1.5); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Be My Valentine? 💌</h1>
+<button id="yes">YES 😍</button>
+<button id="no">NO 😅</button>
+
+<audio id="cheerAudio" src="https://www.soundjay.com/human/applause-8.mp3"></audio>
+
+<script>
+  const noBtn = document.getElementById('no');
+  const yesBtn = document.getElementById('yes');
+  const body = document.body;
+  const cheer = document.getElementById('cheerAudio');
+
+  // Make NO button run away
+  noBtn.addEventListener('mouseover', () => {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+  });
+
+  // Function to create floating hearts
+  function spawnHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerText = '❤️';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+    body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+  }
+
+  // When YES is clicked
+  yesBtn.addEventListener('click', () => {
+    cheer.play();
+    body.innerHTML = `
+      <h1>Yay! You’re my Valentine! ❤️</h1>
+      <img src="https://media.giphy.com/media/3o6ZsYpH6wR8JYJrQ8/giphy.gif" alt="Celebration" style="width:300px; margin-top:20px;">
+    `;
+    setInterval(spawnHeart, 200);
+  });
+</script>
+
+</body>
+</html>
